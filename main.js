@@ -119,8 +119,12 @@ class ScratchpadPlugin {
       return b;
     };
 
+    const toNoteBtn = makeBtn('→ 筆記');
+    const toJournalBtn = makeBtn('→ 日記');
     const copyBtn = makeBtn('複製');
     const clearBtn = makeBtn('清除');
+    actions.appendChild(toNoteBtn);
+    actions.appendChild(toJournalBtn);
     actions.appendChild(copyBtn);
     actions.appendChild(clearBtn);
     toolbar.appendChild(actions);
@@ -177,6 +181,39 @@ class ScratchpadPlugin {
       } catch (e) {
         void e;
         this.app.ui.showNotice('複製失敗，請重試', { type: 'error' });
+      }
+    });
+
+    toNoteBtn.addEventListener('click', async () => {
+      if (!this._content.trim()) {
+        this.app.ui.showNotice('便籤是空的，沒內容可新增', { type: 'info' });
+        return;
+      }
+      // Title 固定用當下時間：便籤 YYYY-MM-DD HH:mm
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      const stamp = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
+        + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+      const title = '便籤 ' + stamp;
+      try {
+        const id = await this.app.notes.create({ title, bodyMarkdown: this._content });
+        this.app.workspace.openNote(id);
+        this.app.ui.showNotice('已新增筆記「' + title + '」', { type: 'success' });
+      } catch (err) {
+        this.app.ui.showNotice('新增失敗：' + (err && err.message ? err.message : String(err)), { type: 'error' });
+      }
+    });
+
+    toJournalBtn.addEventListener('click', async () => {
+      if (!this._content.trim()) {
+        this.app.ui.showNotice('便籤是空的，沒內容可新增', { type: 'info' });
+        return;
+      }
+      try {
+        const date = await this.app.notes.appendToJournal({ text: this._content });
+        this.app.ui.showNotice('已附加到 ' + date + ' 日記', { type: 'success' });
+      } catch (err) {
+        this.app.ui.showNotice('附加失敗：' + (err && err.message ? err.message : String(err)), { type: 'error' });
       }
     });
 
