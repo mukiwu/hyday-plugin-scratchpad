@@ -1,0 +1,12 @@
+{
+  "id": "scratchpad",
+  "name": "便籤",
+  "version": "1.0.0",
+  "main": "main.js",
+  "minHydayVersion": "0.6.0",
+  "description": "右上角常駐便籤。寫想法、電話、待辦——不正式存成筆記，只是隨手記。離開自動保存，下次點開還在。",
+  "author": "Hyday Team",
+  "authorUrl": "https://hyday.web.app",
+  "permissions": ["ui:statusBar", "storage"],
+  "tags": ["productivity", "capture"]
+}
