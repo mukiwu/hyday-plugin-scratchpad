@@ -197,6 +197,11 @@ class ScratchpadPlugin {
       const title = '便籤 ' + stamp;
       try {
         const id = await this.app.notes.create({ title, bodyMarkdown: this._content });
+        // 內容已送進筆記，清空便籤（同「清除」按鈕的清空行為）
+        this._content = '';
+        textarea.value = '';
+        updateCount();
+        this._scheduleSave();
         this.app.workspace.openNote(id);
         this.app.ui.showNotice('已新增筆記「' + title + '」', { type: 'success' });
       } catch (err) {
@@ -211,6 +216,11 @@ class ScratchpadPlugin {
       }
       try {
         const date = await this.app.notes.appendToJournal({ text: this._content });
+        // 內容已送進日記，清空便籤（同「清除」按鈕的清空行為）
+        this._content = '';
+        textarea.value = '';
+        updateCount();
+        this._scheduleSave();
         this.app.ui.showNotice('已附加到 ' + date + ' 日記', { type: 'success' });
       } catch (err) {
         this.app.ui.showNotice('附加失敗：' + (err && err.message ? err.message : String(err)), { type: 'error' });
