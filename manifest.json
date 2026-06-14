@@ -1,17 +1,28 @@
 {
   "id": "scratchpad",
   "name": "便籤",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "main.js",
   "minHydayVersion": "0.6.0",
   "description": "將便條常駐在右上角，可以寫想法、臨時紀錄、待辦.. 等等的隨手記資訊，自動儲存，有需要也可以直接新增到筆記或日記裡。",
   "author": "Hyday Team",
   "authorUrl": "https://hyday.web.app",
-  "permissions": ["ui:statusBar", "notes:write", "storage"],
-  "tags": ["productivity", "capture"],
+  "permissions": [
+    "ui:statusBar",
+    "notes:write",
+    "storage"
+  ],
+  "tags": [
+    "productivity",
+    "capture"
+  ],
   "i18n": {
     "default": "zh-TW",
-    "supported": ["zh-TW", "en", "zh-CN"],
+    "supported": [
+      "zh-TW",
+      "en",
+      "zh-CN"
+    ],
     "names": {
       "zh-TW": "便籤",
       "en": "Scratchpad",
